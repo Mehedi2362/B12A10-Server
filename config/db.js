@@ -1,5 +1,5 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
-require('dotenv').config(); 
+require('dotenv').config();
 let db = null;
 let client = null;
 
@@ -8,11 +8,16 @@ const connectDB = async () => {
         if (db) return db;
         const uri = process.env.MONGODB_URI;
         if (!uri) throw new Error('MONGODB_URI is not defined in environment variables');
-        client = new MongoClient(uri, {
+
+        // Trim and clean the URI to remove any extra characters
+        const cleanUri = uri.trim();
+        console.log('MongoDB URI:', cleanUri);
+
+        client = new MongoClient(cleanUri, {
             serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true }
         });
         await client.connect();
-        
+
         await client.db('admin').command({ ping: 1 });
         db = client.db(process.env.DB_NAME || 'ai-model-inventory');
         console.log('✅ Successfully connected to MongoDB!');
