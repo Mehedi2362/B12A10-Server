@@ -2,11 +2,18 @@ import express from 'express';
 import { ObjectId } from 'mongodb';
 import { getDB } from '../config/db.js';
 import { authMiddleware, optionalAuth } from '../middleware/auth.js';
-import { MODELS, COLLECTIONS } from '../constant/routes.js';
+import { MODELS, COLLECTIONS, ALL_MODELS, MODEL_DETAILS, DELETE_MODEL, ADD_MODEL, UPDATE_MODEL, MY_PURCHASES, MODEL_PURCHASE } from '../constant/routes.js';
+import { readFileSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const logsConfig = JSON.parse(readFileSync(path.join(__dirname, '../logs.json'), 'utf8'));
 
 const router = express.Router();
 
-router.get('/', optionalAuth, async (req, rebs, next) => {
+router.get(ALL_MODELS, optionalAuth, async (req, res, next) => {
     try {
         const db = getDB();
         const { search, framework, limit, sort } = req.query;
@@ -38,14 +45,25 @@ router.get(MODELS.FEATURED, async (req, res, next) => {
 router.get(MODELS.MY_MODELS, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
+        if (logsConfig.enableLogs.routes) {
+            console.log('Fetching user models for:', req.user.email);
+        }
+
         const models = await db.collection(COLLECTIONS.MODELS).find({ createdBy: req.user.email }).sort({ createdAt: -1 }).toArray();
+        if (logsConfig.enableLogs.routes) {
+            console.log('User models found:', models);
+        }
         res.json({ success: true, count: models.length, data: models });
     } catch (error) {
+        if (logsConfig.enableLogs.routes) {
+            console.log(error);
+        }
+
         next(error);
     }
 });
 
-router.get(MODELS.BY_ID, optionalAuth, async (req, res, next) => {
+router.get(MODEL_DETAILS, optionalAuth, async (req, res, next) => {
     try {
         const db = getDB();
         const { id } = req.params;
@@ -54,12 +72,14 @@ router.get(MODELS.BY_ID, optionalAuth, async (req, res, next) => {
         if (!model) return res.status(404).json({ success: false, message: 'Model not found' });
         res.json({ success: true, data: model });
     } catch (error) {
-        console.error('Error fetching model by ID:', error);
+        if (logsConfig.enableLogs.routes) {
+            console.error('Error fetching model by ID:', error);
+        }
         next(error);
     }
 });
 
-router.post('/', authMiddleware, async (req, res, next) => {
+router.post(ADD_MODEL, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
         const { name, framework, useCase, dataset, description, image } = req.body;
@@ -78,7 +98,7 @@ router.post('/', authMiddleware, async (req, res, next) => {
     }
 });
 
-router.put(MODELS.BY_ID, authMiddleware, async (req, res, next) => {
+router.put(UPDATE_MODEL, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
         const { id } = req.params;
@@ -103,7 +123,7 @@ router.put(MODELS.BY_ID, authMiddleware, async (req, res, next) => {
     }
 });
 
-router.delete(MODELS.BY_ID, authMiddleware, async (req, res, next) => {
+router.delete(DELETE_MODEL, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
         const { id } = req.params;
@@ -119,14 +139,14 @@ router.delete(MODELS.BY_ID, authMiddleware, async (req, res, next) => {
     }
 });
 
-router.post(MODELS.PURCHASE, authMiddleware, async (req, res, next) => {
+router.post(MODEL_PURCHASE(':id'), authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
         const { id } = req.params;
         if (!ObjectId.isValid(id)) return res.status(400).json({ success: false, message: 'Invalid model ID format' });
         const model = await db.collection(COLLECTIONS.MODELS).findOne({ _id: new ObjectId(id) });
         if (!model) return res.status(404).json({ success: false, message: 'Model not found' });
-        await db.collection(COLLECTIONS.MODELS).updateOne({ _id: new ObjectId(id) }, { $inc: { purchased: 1 } });
+        await db.collection(COLLECTIONS.MODELS).updateOne({ _id: new ObjectId(id) }, { $inc: { purchased: 1 } }); // Increment purchased count
         const purchase = {
             modelId: id, modelName: model.name, framework: model.framework, useCase: model.useCase,
             image: model.image, createdBy: model.createdBy, purchasedBy: req.user.email, purchasedAt: new Date()

@@ -1,0 +1,18 @@
+{
+  "enableLogs": {
+    "logger": true,
+    "database": true,
+    "firebase": false,
+    "server": false,
+    "errorHandler": true,
+    "routes": true
+  },
+  "description": {
+    "logger": "Request logging (timestamps, methods, paths, files)",
+    "database": "MongoDB connection logs",
+    "firebase": "Firebase Admin SDK initialization logs",
+    "server": "Server startup and shutdown logs",
+    "errorHandler": "Error handling logs",
+    "routes": "Route handler debug logs"
+  }
+}

@@ -1,5 +1,12 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import 'dotenv/config.js';
+import { readFileSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const logsConfig = JSON.parse(readFileSync(path.join(__dirname, '../logs.json'), 'utf8'));
 
 let db = null;
 let client = null;
@@ -17,10 +24,14 @@ export const connectDB = async () => {
 
         await client.db('admin').command({ ping: 1 });
         db = client.db(process.env.DB_NAME || 'ai-model-inventory');
-        console.log('✅ Successfully connected to MongoDB!');
+        if (logsConfig.enableLogs.database) {
+            console.log('✅ Successfully connected to MongoDB!');
+        }
         return db;
     } catch (error) {
-        console.error('❌ MongoDB connection error:', error);
+        if (logsConfig.enableLogs.database) {
+            console.error('❌ MongoDB connection error:', error);
+        }
         throw error;
     }
 };
@@ -35,6 +46,8 @@ export const closeDB = async () => {
         await client.close();
         db = null;
         client = null;
-        console.log('MongoDB connection closed');
+        if (logsConfig.enableLogs.database) {
+            console.log('MongoDB connection closed');
+        }
     }
 };

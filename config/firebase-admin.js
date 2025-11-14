@@ -3,7 +3,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { readFileSync } from 'fs';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const logsConfig = JSON.parse(readFileSync(path.join(__dirname, '../logs.json'), 'utf8'));
 
 let firebaseApp = null;
 
@@ -13,10 +15,14 @@ export const initializeFirebaseAdmin = () => {
         const serviceAccountPath = path.join(__dirname, '../firebase-adminsdk.json');
         const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf8'));
         firebaseApp = admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
-        console.log('✅ Firebase Admin SDK initialized successfully');
+        if (logsConfig.enableLogs.firebase) {
+            console.log('✅ Firebase Admin SDK initialized successfully');
+        }
         return firebaseApp;
     } catch (error) {
-        console.error('❌ Firebase Admin SDK initialization error:', error);
+        if (logsConfig.enableLogs.firebase) {
+            console.error('❌ Firebase Admin SDK initialization error:', error);
+        }
         throw error;
     }
 };
