@@ -1,7 +1,7 @@
-const express = require('express');
-const { getDB } = require('../config/db');
-const { authMiddleware } = require('../middleware/auth');
-const { PURCHASES, COLLECTIONS } = require('../constant/routes');
+import express from 'express';
+import { getDB } from '../config/db.js';
+import { authMiddleware } from '../middleware/auth.js';
+import { PURCHASES, COLLECTIONS } from '../constant/routes.js';
 
 const router = express.Router();
 
@@ -43,4 +43,4 @@ router.get(PURCHASES.STATS, authMiddleware, async (req, res, next) => {
     }
 });
 
-module.exports = router;
+export default router;

@@ -1,13 +1,12 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const { connectDB } = require('./config/db');
-const { initializeFirebaseAdmin } = require('./config/firebase-admin');
-const { errorHandler, notFoundHandler } = require('./middleware/errorHandler');
-const { BASE } = require('./constant/routes');
-
-const modelsRouter = require('./routes/models');
-const purchasesRouter = require('./routes/purchases');
+import 'dotenv/config.js';
+import express from 'express';
+import cors from 'cors';
+import { connectDB, closeDB } from './config/db.js';
+import { initializeFirebaseAdmin } from './config/firebase-admin.js';
+import { errorHandler, notFoundHandler } from './middleware/errorHandler.js';
+import { BASE } from './constant/routes.js';
+import modelsRouter from './routes/models.js';
+import purchasesRouter from './routes/purchases.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -43,7 +42,6 @@ const startServer = async () => {
 
 const shutdown = async () => {
     console.log('\n⏹️  Shutting down gracefully...');
-    const { closeDB } = require('./config/db');
     await closeDB();
     process.exit(0);
 };

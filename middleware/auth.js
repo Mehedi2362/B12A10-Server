@@ -1,6 +1,6 @@
-const { verifyToken } = require('../config/firebase-admin');
+import { verifyToken } from '../config/firebase-admin.js';
 
-const authMiddleware = async (req, res, next) => {
+export const authMiddleware = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -15,7 +15,7 @@ const authMiddleware = async (req, res, next) => {
     }
 };
 
-const optionalAuth = async (req, res, next) => {
+export const optionalAuth = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
         if (authHeader && authHeader.startsWith('Bearer ')) {
@@ -28,5 +28,3 @@ const optionalAuth = async (req, res, next) => {
         next();
     }
 };
-
-module.exports = { authMiddleware, optionalAuth };

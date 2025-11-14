@@ -1,12 +1,12 @@
-const express = require('express');
-const { ObjectId } = require('mongodb');
-const { getDB } = require('../config/db');
-const { authMiddleware, optionalAuth } = require('../middleware/auth');
-const { MODELS, COLLECTIONS } = require('../constant/routes');
+import express from 'express';
+import { ObjectId } from 'mongodb';
+import { getDB } from '../config/db.js';
+import { authMiddleware, optionalAuth } from '../middleware/auth.js';
+import { MODELS, COLLECTIONS } from '../constant/routes.js';
 
 const router = express.Router();
 
-router.get('/', optionalAuth, async (req, res, next) => {
+router.get('/', optionalAuth, async (req, rebs, next) => {
     try {
         const db = getDB();
         const { search, framework, limit, sort } = req.query;
@@ -54,6 +54,7 @@ router.get(MODELS.BY_ID, optionalAuth, async (req, res, next) => {
         if (!model) return res.status(404).json({ success: false, message: 'Model not found' });
         res.json({ success: true, data: model });
     } catch (error) {
+        console.error('Error fetching model by ID:', error);
         next(error);
     }
 });
@@ -138,4 +139,4 @@ router.post(MODELS.PURCHASE, authMiddleware, async (req, res, next) => {
     }
 });
 
-module.exports = router;
+export default router;

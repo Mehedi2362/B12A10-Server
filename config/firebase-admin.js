@@ -1,12 +1,17 @@
-const admin = require('firebase-admin');
-const path = require('path');
+import admin from 'firebase-admin';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { readFileSync } from 'fs';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 let firebaseApp = null;
 
-const initializeFirebaseAdmin = () => {
+export const initializeFirebaseAdmin = () => {
     try {
         if (firebaseApp) return firebaseApp;
-        const serviceAccount = require(path.join(__dirname, '../firebase-adminsdk.json'));
+        const serviceAccountPath = path.join(__dirname, '../firebase-adminsdk.json');
+        const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf8'));
         firebaseApp = admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
         console.log('✅ Firebase Admin SDK initialized successfully');
         return firebaseApp;
@@ -16,7 +21,7 @@ const initializeFirebaseAdmin = () => {
     }
 };
 
-const verifyToken = async (idToken) => {
+export const verifyToken = async (idToken) => {
     try {
         if (!firebaseApp) initializeFirebaseAdmin();
         const decodedToken = await admin.auth().verifyIdToken(idToken);
@@ -26,4 +31,4 @@ const verifyToken = async (idToken) => {
     }
 };
 
-module.exports = { initializeFirebaseAdmin, verifyToken, admin };
+export { admin };

@@ -2,13 +2,19 @@
 	"name": "ai-model-inventory-server",
 	"version": "1.0.0",
 	"description": "Backend API for AI Model Inventory Manager",
+	"type": "module",
 	"main": "index.js",
 	"scripts": {
 		"start": "node index.js",
 		"dev": "nodemon index.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"keywords": ["express", "mongodb", "firebase", "api"],
+	"keywords": [
+		"express",
+		"mongodb",
+		"firebase",
+		"api"
+	],
 	"author": "",
 	"license": "MIT",
 	"dependencies": {
@@ -17,6 +23,7 @@
 		"express": "^5.1.0",
 		"firebase-admin": "^13.6.0",
 		"mongodb": "^7.0.0",
-		"nodemon": "^3.1.10"
+		"nodemon": "^3.1.10",
+		"react-icons": "^5.5.0"
 	}
 }
