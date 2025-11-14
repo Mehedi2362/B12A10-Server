@@ -6,6 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const logsConfig = JSON.parse(readFileSync(path.join(__dirname, '../logs.json'), 'utf8'));
 
+// Global error handler - Catches and formats errors with appropriate status codes
 export const errorHandler = (err, req, res, next) => {
     if (logsConfig.enableLogs.errorHandler) {
         console.error('Error:', err);
@@ -15,6 +16,7 @@ export const errorHandler = (err, req, res, next) => {
     res.status(statusCode).json({ success: false, message, error: process.env.NODE_ENV === 'development' ? err.stack : undefined });
 };
 
+// Handles 404 errors for unmatched routes
 export const notFoundHandler = (req, res, next) => {
     res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found` });
 };

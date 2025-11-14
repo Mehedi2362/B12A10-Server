@@ -1,10 +1,11 @@
 import express from 'express';
 import { getDB } from '../config/db.js';
 import { authMiddleware } from '../middleware/auth.js';
-import { PURCHASES, COLLECTIONS, MY_PURCHASES} from '../constant/routes.js';
+import { PURCHASES, COLLECTIONS, MY_PURCHASES } from '../constant/routes.js';
 
 const router = express.Router();
 
+// Get all purchases made by the authenticated user, sorted by most recent
 router.get(MY_PURCHASES, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
@@ -26,6 +27,7 @@ router.get(MY_PURCHASES, authMiddleware, async (req, res, next) => {
 //     }
 // });
 
+// Get purchase statistics for the user's created models
 router.get('/purchases/stats', authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();

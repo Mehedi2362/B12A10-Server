@@ -25,7 +25,10 @@ app.use(express.urlencoded({ extended: true }));
 // app.use((req, res, next) => { console.log(`${new Date().toISOString()} - ${req.method} ${req.path} ${__dirname}`); next(); });
 app.use(logger);
 
+// Root endpoint - Returns API information and available endpoints
 app.get('/', (req, res) => res.json({ success: true, message: 'AI Model Inventory Manager API', version: '1.0.0', endpoints: { models: `${BASE}/models`, purchases: `${BASE}/purchases`, health: '/health' } }));
+
+// Health check endpoint - Returns server status and timestamp
 app.get('/health', (req, res) => res.json({ success: true, message: 'Server is running', timestamp: new Date().toISOString() }));
 
 app.use(`${BASE}/`, modelsRouter);
@@ -34,6 +37,7 @@ app.use(`${BASE}/`, purchasesRouter);
 app.use(notFoundHandler);
 app.use(errorHandler);
 
+// Initialize and start the Express server with database and Firebase connections
 const startServer = async () => {
     try {
         initializeFirebaseAdmin();
@@ -53,6 +57,7 @@ const startServer = async () => {
     }
 };
 
+// Gracefully shutdown server and close database connections
 const shutdown = async () => {
     if (logsConfig.enableLogs.server) {
         console.log('\n⏹️  Shutting down gracefully...');

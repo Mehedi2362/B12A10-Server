@@ -9,6 +9,7 @@ const logsConfig = JSON.parse(readFileSync(path.join(__dirname, '../logs.json'),
 
 let firebaseApp = null;
 
+// Initializes Firebase Admin SDK with service account credentials
 export const initializeFirebaseAdmin = () => {
     try {
         if (firebaseApp) return firebaseApp;
@@ -27,6 +28,7 @@ export const initializeFirebaseAdmin = () => {
     }
 };
 
+// Verifies Firebase ID token and returns decoded user information
 export const verifyToken = async (idToken) => {
     try {
         if (!firebaseApp) initializeFirebaseAdmin();

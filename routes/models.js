@@ -13,6 +13,7 @@ const logsConfig = JSON.parse(readFileSync(path.join(__dirname, '../logs.json'),
 
 const router = express.Router();
 
+// Get all models with optional filtering by search query and framework, supports sorting and limiting
 router.get(ALL_MODELS, optionalAuth, async (req, res, next) => {
     try {
         const db = getDB();
@@ -32,6 +33,7 @@ router.get(ALL_MODELS, optionalAuth, async (req, res, next) => {
     }
 });
 
+// Get featured models - Returns the 6 most recently created models
 router.get(MODELS.FEATURED, async (req, res, next) => {
     try {
         const db = getDB();
@@ -42,6 +44,7 @@ router.get(MODELS.FEATURED, async (req, res, next) => {
     }
 });
 
+// Get models created by the authenticated user
 router.get(MODELS.MY_MODELS, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
@@ -63,6 +66,7 @@ router.get(MODELS.MY_MODELS, authMiddleware, async (req, res, next) => {
     }
 });
 
+// Get detailed information about a specific model by ID
 router.get(MODEL_DETAILS, optionalAuth, async (req, res, next) => {
     try {
         const db = getDB();
@@ -79,6 +83,7 @@ router.get(MODEL_DETAILS, optionalAuth, async (req, res, next) => {
     }
 });
 
+// Create a new AI model - Requires authentication and validates all required fields
 router.post(ADD_MODEL, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
@@ -98,6 +103,7 @@ router.post(ADD_MODEL, authMiddleware, async (req, res, next) => {
     }
 });
 
+// Update an existing model - Only the creator can update their model
 router.put(UPDATE_MODEL, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
@@ -123,6 +129,7 @@ router.put(UPDATE_MODEL, authMiddleware, async (req, res, next) => {
     }
 });
 
+// Delete a model and all associated purchases - Only the creator can delete their model
 router.delete(DELETE_MODEL, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
@@ -139,6 +146,7 @@ router.delete(DELETE_MODEL, authMiddleware, async (req, res, next) => {
     }
 });
 
+// Purchase a model - Increments purchase count and creates a purchase record
 router.post(MODEL_PURCHASE(':id'), authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();

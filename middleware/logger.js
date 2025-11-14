@@ -6,6 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const logsConfig = JSON.parse(readFileSync(path.join(__dirname, '../logs.json'), 'utf8'));
 
+// Middleware to log incoming requests with timestamp, method, path, and source file
 export const logger = (req, res, next) => {
     // Skip logging if logger is disabled
     if (!logsConfig.enableLogs.logger) {
@@ -68,6 +69,7 @@ const colors = {
     brightMagenta: '\x1b[95m'
 };
 
+// Returns appropriate ANSI color code based on HTTP method
 function getMethodColor(method) {
     const methodColors = {
         GET: colors.brightGreen,
@@ -79,6 +81,7 @@ function getMethodColor(method) {
     return methodColors[method] || colors.reset;
 }
 
+// Formats a Date object into 12-hour time format (HH:MM AM/PM)
 function formatTime(date) {
     let hours = date.getHours();
     const minutes = date.getMinutes();
@@ -92,6 +95,7 @@ function formatTime(date) {
     return `${hours}:${minutesStr} ${ampm}`;
 }
 
+// Extracts the actual source file and line number from the call stack
 function getRealCallerFile() {
     const original = Error.prepareStackTrace;
 

@@ -1,5 +1,6 @@
 import { verifyToken } from '../config/firebase-admin.js';
 
+// Middleware to verify Firebase authentication token and attach user to request
 export const authMiddleware = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
@@ -15,6 +16,7 @@ export const authMiddleware = async (req, res, next) => {
     }
 };
 
+// Middleware for optional authentication - Attaches user if token exists, continues regardless
 export const optionalAuth = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;

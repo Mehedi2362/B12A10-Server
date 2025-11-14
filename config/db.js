@@ -11,6 +11,7 @@ const logsConfig = JSON.parse(readFileSync(path.join(__dirname, '../logs.json'),
 let db = null;
 let client = null;
 
+// Establishes connection to MongoDB and returns database instance
 export const connectDB = async () => {
     try {
         if (db) return db;
@@ -36,11 +37,13 @@ export const connectDB = async () => {
     }
 };
 
+// Returns the active database instance or throws error if not initialized
 export const getDB = () => {
     if (!db) throw new Error('Database not initialized. Call connectDB first.');
     return db;
 };
 
+// Closes the MongoDB connection and cleans up resources
 export const closeDB = async () => {
     if (client) {
         await client.close();
