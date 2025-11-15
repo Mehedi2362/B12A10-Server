@@ -2,7 +2,7 @@ import express from 'express';
 import { ObjectId } from 'mongodb';
 import { getDB } from '../config/db.js';
 import { authMiddleware, optionalAuth } from '../middleware/auth.js';
-import { MODELS, COLLECTIONS, ALL_MODELS, MODEL_DETAILS, DELETE_MODEL, ADD_MODEL, UPDATE_MODEL, MY_PURCHASES, MODEL_PURCHASE } from '../constant/routes.js';
+import { ALL_MODELS, MODEL_DETAILS, DELETE_MODEL, ADD_MODEL, UPDATE_MODEL, MODEL_PURCHASE, MY_MODELS, FEATURED_MODELS, MODELS, PURCHASES } from '../constant/routes.js';
 import { readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -21,7 +21,7 @@ router.get(ALL_MODELS, optionalAuth, async (req, res, next) => {
         let query = {};
         if (search) query.name = { $regex: search, $options: 'i' };
         if (framework && framework !== 'all') query.framework = framework;
-        let modelsQuery = db.collection(COLLECTIONS.MODELS).find(query);
+        let modelsQuery = db.collection(MODELS).find(query);
         if (sort === 'oldest') modelsQuery = modelsQuery.sort({ createdAt: 1 });
         else if (sort === 'popular') modelsQuery = modelsQuery.sort({ purchased: -1 });
         else modelsQuery = modelsQuery.sort({ createdAt: -1 });
@@ -34,10 +34,10 @@ router.get(ALL_MODELS, optionalAuth, async (req, res, next) => {
 });
 
 // Get featured models - Returns the 6 most recently created models
-router.get(MODELS.FEATURED, async (req, res, next) => {
+router.get(FEATURED_MODELS, async (req, res, next) => {
     try {
         const db = getDB();
-        const models = await db.collection(COLLECTIONS.MODELS).find({}).sort({ createdAt: -1 }).limit(6).toArray();
+        const models = await db.collection(MODELS).find({}).sort({ createdAt: -1 }).limit(6).toArray();
         res.json({ success: true, count: models.length, data: models });
     } catch (error) {
         next(error);
@@ -45,17 +45,15 @@ router.get(MODELS.FEATURED, async (req, res, next) => {
 });
 
 // Get models created by the authenticated user
-router.get(MODELS.MY_MODELS, authMiddleware, async (req, res, next) => {
+router.get(MY_MODELS, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
         if (logsConfig.enableLogs.routes) {
             console.log('Fetching user models for:', req.user.email);
         }
 
-        const models = await db.collection(COLLECTIONS.MODELS).find({ createdBy: req.user.email }).sort({ createdAt: -1 }).toArray();
-        if (logsConfig.enableLogs.routes) {
-            console.log('User models found:', models);
-        }
+        const models = await db.collection(MODELS).find({ createdBy: req.user.email }).sort({ createdAt: -1 }).toArray();
+        // if (logsConfig.enableLogs.routes) {}
         res.json({ success: true, count: models.length, data: models });
     } catch (error) {
         if (logsConfig.enableLogs.routes) {
@@ -72,7 +70,7 @@ router.get(MODEL_DETAILS, optionalAuth, async (req, res, next) => {
         const db = getDB();
         const { id } = req.params;
         if (!ObjectId.isValid(id)) return res.status(400).json({ success: false, message: 'Invalid model ID format' });
-        const model = await db.collection(COLLECTIONS.MODELS).findOne({ _id: new ObjectId(id) });
+        const model = await db.collection(MODELS).findOne({ _id: new ObjectId(id) });
         if (!model) return res.status(404).json({ success: false, message: 'Model not found' });
         res.json({ success: true, data: model });
     } catch (error) {
@@ -96,7 +94,7 @@ router.post(ADD_MODEL, authMiddleware, async (req, res, next) => {
             dataset: dataset.trim(), description: description.trim(), image: image.trim(),
             createdBy: req.user.email, createdAt: new Date(), purchased: 0
         };
-        const result = await db.collection(COLLECTIONS.MODELS).insertOne(newModel);
+        const result = await db.collection(MODELS).insertOne(newModel);
         res.status(201).json({ success: true, message: 'Model added successfully', data: { _id: result.insertedId, ...newModel } });
     } catch (error) {
         next(error);
@@ -110,7 +108,7 @@ router.put(UPDATE_MODEL, authMiddleware, async (req, res, next) => {
         const { id } = req.params;
         const { name, framework, useCase, dataset, description, image } = req.body;
         if (!ObjectId.isValid(id)) return res.status(400).json({ success: false, message: 'Invalid model ID format' });
-        const existingModel = await db.collection(COLLECTIONS.MODELS).findOne({ _id: new ObjectId(id) });
+        const existingModel = await db.collection(MODELS).findOne({ _id: new ObjectId(id) });
         if (!existingModel) return res.status(404).json({ success: false, message: 'Model not found' });
         if (existingModel.createdBy !== req.user.email) return res.status(403).json({ success: false, message: 'You are not authorized to update this model' });
         if (!name || !framework || !useCase || !dataset || !description || !image) {
@@ -120,9 +118,9 @@ router.put(UPDATE_MODEL, authMiddleware, async (req, res, next) => {
             name: name.trim(), framework: framework.trim(), useCase: useCase.trim(),
             dataset: dataset.trim(), description: description.trim(), image: image.trim(), updatedAt: new Date()
         };
-        const result = await db.collection(COLLECTIONS.MODELS).updateOne({ _id: new ObjectId(id) }, { $set: updateData });
+        const result = await db.collection(MODELS).updateOne({ _id: new ObjectId(id) }, { $set: updateData });
         if (result.modifiedCount === 0) return res.status(400).json({ success: false, message: 'No changes made to the model' });
-        const updatedModel = await db.collection(COLLECTIONS.MODELS).findOne({ _id: new ObjectId(id) });
+        const updatedModel = await db.collection(MODELS).findOne({ _id: new ObjectId(id) });
         res.json({ success: true, message: 'Model updated successfully', data: updatedModel });
     } catch (error) {
         next(error);
@@ -135,11 +133,11 @@ router.delete(DELETE_MODEL, authMiddleware, async (req, res, next) => {
         const db = getDB();
         const { id } = req.params;
         if (!ObjectId.isValid(id)) return res.status(400).json({ success: false, message: 'Invalid model ID format' });
-        const existingModel = await db.collection(COLLECTIONS.MODELS).findOne({ _id: new ObjectId(id) });
+        const existingModel = await db.collection(MODELS).findOne({ _id: new ObjectId(id) });
         if (!existingModel) return res.status(404).json({ success: false, message: 'Model not found' });
         if (existingModel.createdBy !== req.user.email) return res.status(403).json({ success: false, message: 'You are not authorized to delete this model' });
-        await db.collection(COLLECTIONS.MODELS).deleteOne({ _id: new ObjectId(id) });
-        await db.collection(COLLECTIONS.PURCHASES).deleteMany({ modelId: id });
+        await db.collection(MODELS).deleteOne({ _id: new ObjectId(id) });
+        await db.collection(PURCHASES).deleteMany({ modelId: id });
         res.json({ success: true, message: 'Model deleted successfully' });
     } catch (error) {
         next(error);
@@ -152,15 +150,15 @@ router.post(MODEL_PURCHASE(':id'), authMiddleware, async (req, res, next) => {
         const db = getDB();
         const { id } = req.params;
         if (!ObjectId.isValid(id)) return res.status(400).json({ success: false, message: 'Invalid model ID format' });
-        const model = await db.collection(COLLECTIONS.MODELS).findOne({ _id: new ObjectId(id) });
+        const model = await db.collection(MODELS).findOne({ _id: new ObjectId(id) });
         if (!model) return res.status(404).json({ success: false, message: 'Model not found' });
-        await db.collection(COLLECTIONS.MODELS).updateOne({ _id: new ObjectId(id) }, { $inc: { purchased: 1 } }); // Increment purchased count
+        await db.collection(MODELS).updateOne({ _id: new ObjectId(id) }, { $inc: { purchased: 1 } }); // Increment purchased count
         const purchase = {
             modelId: id, modelName: model.name, framework: model.framework, useCase: model.useCase,
             image: model.image, createdBy: model.createdBy, purchasedBy: req.user.email, purchasedAt: new Date()
         };
-        await db.collection(COLLECTIONS.PURCHASES).insertOne(purchase);
-        const updatedModel = await db.collection(COLLECTIONS.MODELS).findOne({ _id: new ObjectId(id) });
+        await db.collection(PURCHASES).insertOne(purchase);
+        const updatedModel = await db.collection(MODELS).findOne({ _id: new ObjectId(id) });
         res.json({ success: true, message: 'Model purchased successfully', data: updatedModel });
     } catch (error) {
         next(error);

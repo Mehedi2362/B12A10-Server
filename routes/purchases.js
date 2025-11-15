@@ -1,7 +1,8 @@
 import express from 'express';
 import { getDB } from '../config/db.js';
 import { authMiddleware } from '../middleware/auth.js';
-import { PURCHASES, COLLECTIONS, MY_PURCHASES } from '../constant/routes.js';
+import { MODELS, MY_PURCHASES, PURCHASES } from '../constant/routes.js';
+import { ObjectId } from 'mongodb';
 
 const router = express.Router();
 
@@ -9,7 +10,10 @@ const router = express.Router();
 router.get(MY_PURCHASES, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
-        const purchases = await db.collection(COLLECTIONS.PURCHASES).find({ purchasedBy: req.user.email }).sort({ purchasedAt: -1 }).toArray();
+        let ids = await db.collection(PURCHASES).find({ purchasedBy: req.user.email }).sort({ purchasedAt: -1 }).project({ modelId: 1}).toArray(); console.log(ids);
+        ids = ids.map(id => new ObjectId(id.modelId));
+        const purchases = await db.collection(MODELS).find({ _id: { $in: ids } }).toArray(); console.log(purchases);
+
         res.json({ success: true, count: purchases.length, data: purchases });
     } catch (error) {
         next(error);
@@ -20,7 +24,7 @@ router.get(MY_PURCHASES, authMiddleware, async (req, res, next) => {
 //     try {
 //         const db = getDB();
 //         const { id } = req.params;
-//         const purchases = await db.collection(COLLECTIONS.PURCHASES).find({ modelId: id }).sort({ purchasedAt: -1 }).toArray();
+//         const purchases = await db.collection(PURCHASES).find({ modelId: id }).sort({ purchasedAt: -1 }).toArray();
 //         res.json({ success: true, count: purchases.length, data: purchases });
 //     } catch (error) {
 //         next(error);
@@ -31,10 +35,10 @@ router.get(MY_PURCHASES, authMiddleware, async (req, res, next) => {
 router.get('/purchases/stats', authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
-        const userModels = await db.collection(COLLECTIONS.MODELS).find({ createdBy: req.user.email }).toArray();
+        const userModels = await db.collection(MODELS).find({ createdBy: req.user.email }).toArray();
         const modelIds = userModels.map(m => m._id.toString());
-        const totalPurchases = await db.collection(COLLECTIONS.PURCHASES).countDocuments({ modelId: { $in: modelIds } });
-        const purchasesByModel = await db.collection(COLLECTIONS.PURCHASES).aggregate([
+        const totalPurchases = await db.collection(PURCHASES).countDocuments({ modelId: { $in: modelIds } });
+        const purchasesByModel = await db.collection(PURCHASES).aggregate([
             { $match: { modelId: { $in: modelIds } } },
             { $group: { _id: '$modelId', count: { $sum: 1 }, modelName: { $first: '$modelName' } } },
             { $sort: { count: -1 } }
