@@ -1,0 +1,9 @@
+node_modules
+.env
+.DS_Store
+*.log
+firebase-adminsdk.json
+README.md
+.git
+.gitignore
+pnpm-lock.yaml

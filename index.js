@@ -1,4 +1,4 @@
-import 'dotenv/config.js';
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import { connectDB, closeDB } from './config/db.js';
@@ -19,7 +19,7 @@ const logsConfig = JSON.parse(readFileSync(path.join(__dirname, 'logs.json'), 'u
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: process.env.CLIENT_URL || 'http://localhost:5173', credentials: true }));
+app.use(cors({ origin: process.env.CLIENT_URL?.trim() || 'http://localhost:5173', credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use((req, res, next) => { console.log(`${new Date().toISOString()} - ${req.method} ${req.path} ${__dirname}`); next(); });
@@ -43,14 +43,14 @@ const startServer = async () => {
         initializeFirebaseAdmin();
         await connectDB();
         app.listen(PORT, () => {
-            if (logsConfig.enableLogs.server) {
+            if (logsConfig?.enableLogs?.server) {
                 console.log(`🚀 Server running on port ${PORT}`);
                 console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
                 console.log(`🌐 Client URL: ${process.env.CLIENT_URL || 'http://localhost:5173'}`);
             }
         });
     } catch (error) {
-        if (logsConfig.enableLogs.server) {
+        if (logsConfig?.enableLogs?.server) {
             console.error('Failed to start server:', error);
         }
         process.exit(1);
@@ -59,7 +59,7 @@ const startServer = async () => {
 
 // Gracefully shutdown server and close database connections
 const shutdown = async () => {
-    if (logsConfig.enableLogs.server) {
+    if (logsConfig?.enableLogs?.server) {
         console.log('\n⏹️  Shutting down gracefully...');
     }
     await closeDB();

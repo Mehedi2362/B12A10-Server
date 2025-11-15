@@ -13,8 +13,10 @@ let firebaseApp = null;
 export const initializeFirebaseAdmin = () => {
     try {
         if (firebaseApp) return firebaseApp;
-        const serviceAccountPath = path.join(__dirname, '../firebase-adminsdk.json');
-        const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf8'));
+
+        const decoded = Buffer.from(process.env.FIREBASE_ADMIN_SDK_JSON, "base64").toString("utf8");
+        const serviceAccount = JSON.parse(decoded);
+
         firebaseApp = admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
         if (logsConfig.enableLogs.firebase) {
             console.log('✅ Firebase Admin SDK initialized successfully');
