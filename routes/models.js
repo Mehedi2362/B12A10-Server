@@ -1,3 +1,6 @@
+// #API: Express router for AI model CRUD operations
+// #CRUD: Complete REST API implementation for models
+// #AUTH: Firebase Admin SDK authentication for protected routes
 import express from 'express';
 import { ObjectId } from 'mongodb';
 import { getDB } from '../config/db.js';
@@ -13,7 +16,9 @@ const logsConfig = JSON.parse(readFileSync(path.join(__dirname, '../logs.json'),
 
 const router = express.Router();
 
-// Get all models with optional filtering by search query and framework, supports sorting and limiting
+// #READ: Get all models with optional filtering by search query and framework
+// #SEARCH: MongoDB regex for case-insensitive search
+// #FILTER: Framework filter and sorting capabilities
 router.get(ALL_MODELS, optionalAuth, async (req, res, next) => {
     try {
         const db = getDB();
@@ -33,7 +38,7 @@ router.get(ALL_MODELS, optionalAuth, async (req, res, next) => {
     }
 });
 
-// Get featured models - Returns the 6 most recently created models
+// #DYNAMIC: Get featured models for home page - Returns 6 most recent models
 router.get(FEATURED_MODELS, async (req, res, next) => {
     try {
         const db = getDB();
@@ -44,7 +49,8 @@ router.get(FEATURED_MODELS, async (req, res, next) => {
     }
 });
 
-// Get models created by the authenticated user
+// #READ: Get models created by authenticated user - My Models page
+// #AUTH: Requires valid Firebase JWT token
 router.get(MY_MODELS, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
@@ -64,8 +70,8 @@ router.get(MY_MODELS, authMiddleware, async (req, res, next) => {
     }
 });
 
-// Get detailed information about a specific model by ID
-router.get(MODEL_DETAILS, optionalAuth, async (req, res, next) => {
+// #READ: Get detailed information about a specific model by ID
+router.get(MODEL_DETAILS, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
         const { id } = req.params;
@@ -81,7 +87,9 @@ router.get(MODEL_DETAILS, optionalAuth, async (req, res, next) => {
     }
 });
 
-// Create a new AI model - Requires authentication and validates all required fields
+// #CREATE: Create new AI model with validation
+// #AUTH: Requires authentication, auto-assigns createdBy from JWT
+// #VALIDATION: Validates all required fields before insertion
 router.post(ADD_MODEL, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
@@ -101,7 +109,9 @@ router.post(ADD_MODEL, authMiddleware, async (req, res, next) => {
     }
 });
 
-// Update an existing model - Only the creator can update their model
+// #UPDATE: Update existing model - Creator authorization enforced
+// #AUTH: Verifies user is the creator before allowing updates
+// #VALIDATION: Validates all fields and checks ownership
 router.put(UPDATE_MODEL, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
@@ -127,7 +137,8 @@ router.put(UPDATE_MODEL, authMiddleware, async (req, res, next) => {
     }
 });
 
-// Delete a model and all associated purchases - Only the creator can delete their model
+// #DELETE: Delete model and cascade delete all purchases
+// #AUTH: Verifies user is the creator before allowing deletion
 router.delete(DELETE_MODEL, authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
@@ -144,7 +155,9 @@ router.delete(DELETE_MODEL, authMiddleware, async (req, res, next) => {
     }
 });
 
-// Purchase a model - Increments purchase count and creates a purchase record
+// #PURCHASE: Purchase model - Increments counter and creates purchase record
+// #REALTIME: Uses MongoDB $inc operator for atomic counter increment
+// #AUTH: Requires authentication to purchase
 router.post(MODEL_PURCHASE(':id'), authMiddleware, async (req, res, next) => {
     try {
         const db = getDB();
@@ -154,8 +167,8 @@ router.post(MODEL_PURCHASE(':id'), authMiddleware, async (req, res, next) => {
         if (!model) return res.status(404).json({ success: false, message: 'Model not found' });
         await db.collection(MODELS).updateOne({ _id: new ObjectId(id) }, { $inc: { purchased: 1 } }); // Increment purchased count
         const purchase = {
-            modelId: id, modelName: model.name, framework: model.framework, useCase: model.useCase,
-            image: model.image, createdBy: model.createdBy, purchasedBy: req.user.email, purchasedAt: new Date()
+            modelId: id, modelName: model.name, 
+            createdBy: model.createdBy, purchasedBy: req.user.email, purchasedAt: new Date()
         };
         await db.collection(PURCHASES).insertOne(purchase);
         const updatedModel = await db.collection(MODELS).findOne({ _id: new ObjectId(id) });

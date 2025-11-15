@@ -1,7 +1,7 @@
 {
   "enableLogs": {
     "logger": true,
-    "database": true,
+    "database": false,
     "firebase": true,
     "server": true,
     "errorHandler": true,

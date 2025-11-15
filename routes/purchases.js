@@ -12,7 +12,7 @@ router.get(MY_PURCHASES, authMiddleware, async (req, res, next) => {
         const db = getDB();
         let ids = await db.collection(PURCHASES).find({ purchasedBy: req.user.email }).sort({ purchasedAt: -1 }).project({ modelId: 1}).toArray(); console.log(ids);
         ids = ids.map(id => new ObjectId(id.modelId));
-        const purchases = await db.collection(MODELS).find({ _id: { $in: ids } }).toArray(); console.log(purchases);
+        const purchases = await db.collection(MODELS).find({ _id: { $in: ids } }).toArray(); 
 
         res.json({ success: true, count: purchases.length, data: purchases });
     } catch (error) {
