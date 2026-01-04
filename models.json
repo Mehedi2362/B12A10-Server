@@ -1,0 +1,180 @@
+[
+
+  {
+    "name": "DeepSeek V3",
+    "framework": "PyTorch",
+    "useCase": "General Reasoning & Coding",
+    "dataset": "14.8 trillion tokens (knowledge cutoff July 2024)",
+    "description": "## DeepSeek V3\n\nDeepSeek V3 is a frontier-class large language model developed by the DeepSeek research team, representing a substantial leap forward in reasoning and coding capabilities. Built on the PyTorch framework, this model has been trained on an extensive corpus of 14.8 trillion tokens, encompassing diverse domains including mathematics, computer science, and technical documentation. The architecture employs advanced mixture-of-experts mechanisms and sophisticated attention patterns to achieve remarkable performance on reasoning benchmarks. DeepSeek V3 demonstrates exceptional capabilities in algorithmic problem-solving, software development, and complex multi-step reasoning tasks. Its training methodology emphasizes long-context understanding and robust generalization across varied domains.\n\n**Key Characteristics:**\n- Mixture-of-experts architecture\n- 14.8 trillion token training corpus\n- Advanced reasoning mechanisms\n- Superior coding performance",
+    "image": "https://i.ibb.co/1Yn3B9Rq/Deep-Seek-Logo.png",
+    "createdBy": "deepseek@example.com",
+    "createdAt": "2024-12-26T00:00:00.000Z",
+    "purchased": 55
+  },
+  {
+    "name": "Qwen2-VL Image Edit",
+    "framework": "PyTorch",
+    "useCase": "Image Editing",
+    "dataset": "Large paired vision–language dataset",
+    "description": "## Qwen2-VL Image Edit\n\nQwen2-VL Image Edit represents a specialized multimodal model developed by Alibaba, specifically engineered for semantic image manipulation and editing tasks. This vision-language model integrates visual understanding with linguistic instruction interpretation, enabling intuitive image modification through natural language prompts. Built on PyTorch, the model leverages a large-scale paired vision-language dataset comprising diverse image categories and corresponding textual descriptions. The architecture incorporates convolutional neural networks for visual feature extraction combined with transformer-based language understanding modules. Qwen2-VL Image Edit demonstrates remarkable capabilities in context-aware image generation, style transfer, and content-aware editing operations while maintaining semantic fidelity.\n\n**Key Characteristics:**\n- Multimodal vision-language architecture\n- Paired image-text training dataset\n- Semantic-aware editing capabilities\n- Natural language instruction processing",
+    "image": "https://i.ibb.co/XfRgK6xG/qwen-image-edit-logo.png",
+    "createdBy": "alibaba@example.com",
+    "createdAt": "2024-11-05T11:45:00.000Z",
+    "purchased": 27
+  },
+  {
+    "name": "OpenAI o1",
+    "framework": "PyTorch",
+    "useCase": "Reasoning & Coding",
+    "dataset": "Multimodal large-scale dataset (up to October 2023)",
+    "description": "## OpenAI o1\n\nOpenAI o1 is a specialized reasoning model designed to excel at complex problem-solving, mathematical reasoning, and software development tasks. This model employs chain-of-thought mechanisms that decompose intricate problems into manageable computational steps, mirroring human reasoning processes. Built on PyTorch with training on multimodal datasets extending through October 2023, o1 demonstrates exceptional performance on competitive programming challenges, advanced mathematics, and physics problems. The model incorporates novel training techniques emphasizing process-level reward signals and reinforcement learning, enabling it to develop robust internal reasoning strategies. OpenAI o1 represents a paradigm shift toward models that prioritize reasoning depth over pattern matching.\n\n**Key Characteristics:**\n- Chain-of-thought reasoning mechanisms\n- Process-level reward optimization\n- Enhanced mathematical capabilities\n- Superior competitive programming performance",
+    "image": "",
+    "createdBy": "openai@example.com",
+    "createdAt": "2024-09-12T00:00:00.000Z",
+    "purchased": 44
+  },
+  {
+    "name": "Google BERT",
+    "framework": "TensorFlow",
+    "useCase": "NLP Understanding",
+    "dataset": "BooksCorpus + English Wikipedia",
+    "description": "## Google BERT\n\nBidirectional Encoder Representations from Transformers (BERT) represents a foundational breakthrough in natural language processing, introduced by Google in 2018. This model revolutionized the field by introducing bidirectional pre-training on large unlabeled corpora, allowing it to capture context from both preceding and succeeding tokens. Implemented in TensorFlow, BERT is trained on the BooksCorpus and English Wikipedia datasets, leveraging masked language modeling and next-sentence prediction as primary objectives. The architecture employs multi-layer bidirectional transformers with attention mechanisms, enabling the model to learn rich semantic representations. BERT has become a benchmark model, spawning numerous variants and applications across sentiment analysis, named entity recognition, and semantic similarity tasks.\n\n**Key Characteristics:**\n- Bidirectional training approach\n- Masked language modeling objective\n- Multi-layer transformer architecture\n- Foundational NLP model",
+    "image": "https://i.ibb.co/278M3Pmk/Google-BERT-What-you-probably-didnt-know-about-the-AI.png",
+    "createdBy": "google@example.com",
+    "createdAt": "2018-10-11T00:00:00.000Z",
+    "purchased": 19
+  },
+  {
+    "name": "GPT-4 Turbo",
+    "framework": "Unknown (OpenAI proprietary)",
+    "useCase": "Advanced Language Understanding & Generation",
+    "dataset": "Proprietary multimodal dataset (knowledge cutoff April 2024)",
+    "description": "## GPT-4 Turbo\n\nGPT-4 Turbo is an enhanced variant of OpenAI's fourth-generation generative pre-trained transformer, optimized for reduced latency and improved throughput without compromising model capability. This iteration demonstrates significantly improved instruction-following, reasoning consistency, and multimodal processing capabilities. The model integrates vision understanding with language generation, enabling sophisticated analysis of images and documents. With an extended context window of 128,000 tokens, GPT-4 Turbo facilitates complex document analysis and multi-step reasoning tasks. The architecture employs advanced prompt engineering compatibility and novel training methodologies emphasizing robustness and reliability. GPT-4 Turbo serves as a benchmark for state-of-the-art language model performance across diverse professional applications.\n\n**Key Characteristics:**\n- Extended 128K token context window\n- Multimodal input capabilities\n- Enhanced instruction adherence\n- Improved inference speed",
+    "image": "https://i.ibb.co/placeholder/gpt4turbo.png",
+    "createdBy": "openai@example.com",
+    "createdAt": "2024-04-15T00:00:00.000Z",
+    "purchased": 92
+  },
+  {
+    "name": "Meta Llama 3",
+    "framework": "PyTorch",
+    "useCase": "Open-Source General Purpose Language Model",
+    "dataset": "15 trillion tokens (knowledge cutoff March 2024)",
+    "description": "## Meta Llama 3\n\nMeta's Llama 3 represents a significant advancement in open-source large language models, leveraging PyTorch infrastructure and trained on 15 trillion tokens of diverse internet text. This model addresses accessibility and democratization of advanced AI capabilities through open-source distribution. Llama 3 incorporates sophisticated architectural innovations including grouped query attention mechanisms and improved tokenization strategies. The model demonstrates robust performance across language understanding, creative writing, and code generation tasks while maintaining computational efficiency. Meta's emphasis on responsible AI development is reflected in safety training techniques and transparency regarding model capabilities and limitations. Llama 3 has catalyzed community-driven research and enables enterprises to maintain data sovereignty through local deployment.\n\n**Key Characteristics:**\n- Open-source architecture\n- Grouped query attention mechanism\n- Extensive pre-training corpus\n- Efficient deployment framework",
+    "image": "https://i.ibb.co/placeholder/llama3.png",
+    "createdBy": "meta@example.com",
+    "createdAt": "2024-03-20T00:00:00.000Z",
+    "purchased": 88
+  },
+  {
+    "name": "Mistral 7B",
+    "framework": "PyTorch",
+    "useCase": "Efficient Inference & Edge Deployment",
+    "dataset": "Diverse web content (knowledge cutoff September 2023)",
+    "description": "## Mistral 7B\n\nMistral 7B is a lightweight yet powerful language model developed by Mistral AI, specifically engineered for efficient deployment on resource-constrained environments and edge devices. Despite its 7-billion parameter architecture, Mistral 7B demonstrates competitive performance with significantly larger models, achieving this through advanced architectural optimizations and sophisticated training methodologies. Built on PyTorch, the model employs efficient attention mechanisms and grouped query attention patterns. Mistral 7B represents a paradigm shift toward practical AI deployment, enabling organizations to run capable language models on modest hardware configurations. The model's efficiency-to-performance ratio makes it particularly valuable for real-time applications, mobile integration, and privacy-preserving local inference scenarios.\n\n**Key Characteristics:**\n- Lightweight 7B parameter design\n- Grouped query attention\n- Efficient token processing\n- Edge-device compatibility",
+    "image": "https://i.ibb.co.com/jkWtsbD4/Mistral.jpg",
+    "createdBy": "mistral@example.com",
+    "createdAt": "2023-09-10T00:00:00.000Z",
+    "purchased": 73
+  },
+  {
+    "name": "PaLM 2",
+    "framework": "JAX/TensorFlow",
+    "useCase": "Multilingual & Mathematical Reasoning",
+    "dataset": "Multilingual corpus including code (knowledge cutoff March 2024)",
+    "description": "## PaLM 2\n\nPaLM 2 (Pathways Language Model 2) represents Google's advanced language modeling research, emphasizing multilingual capabilities and mathematical reasoning performance. Implemented using JAX and TensorFlow, this model leverages the Pathways infrastructure enabling efficient scaling across diverse computational resources. PaLM 2 demonstrates exceptional performance across multilingual translation, mathematical problem-solving, and logical reasoning tasks. The architecture incorporates advanced tokenization strategies supporting 100+ languages and specialized mathematical notation. The model's training includes diverse code repositories, enabling sophisticated software development assistance. PaLM 2 exemplifies Google's commitment to frontier AI research emphasizing safety, interpretability, and responsible deployment practices.\n\n**Key Characteristics:**\n- Multilingual training emphasis\n- Advanced mathematical reasoning\n- Code understanding capabilities\n- Pathways infrastructure integration",
+    "image": "https://i.ibb.co/placeholder/palm2.png",
+    "createdBy": "google@example.com",
+    "createdAt": "2024-03-05T00:00:00.000Z",
+    "purchased": 67
+  },
+  {
+    "name": "Gemini 1.5 Pro",
+    "framework": "Unknown (Google proprietary)",
+    "useCase": "Multimodal Understanding & Analysis",
+    "dataset": "Proprietary multimodal dataset (knowledge cutoff April 2024)",
+    "description": "## Gemini 1.5 Pro\n\nGemini 1.5 Pro is Google's flagship multimodal model, representing the state-of-the-art in simultaneous processing of text, images, audio, and video modalities. This advanced model integrates multiple specialized neural architectures optimized for different data types, enabling sophisticated cross-modal reasoning and synthesis. With a context window extending to 1 million tokens, Gemini 1.5 Pro facilitates analysis of extensive documents, videos, and complex datasets in single interactions. The model employs advanced fusion mechanisms combining modality-specific embeddings with unified representation spaces. Gemini 1.5 Pro demonstrates remarkable capabilities in visual reasoning, document analysis, and multimedia content generation while maintaining enterprise-grade reliability and safety standards.\n\n**Key Characteristics:**\n- 1 million token context window\n- True multimodal architecture\n- Advanced cross-modal fusion\n- Enterprise deployment readiness",
+    "image": "https://i.ibb.co/7JK2PKQp/oa-AKid-ME4i-Qk-ACPEn7-BZen-1380-80.jpg",
+    "createdBy": "google@example.com",
+    "createdAt": "2024-04-10T00:00:00.000Z",
+    "purchased": 85
+  },
+  {
+    "name": "Anthropic Claude 3 Opus",
+    "framework": "Unknown (Anthropic proprietary)",
+    "useCase": "Expert-Level Analysis & Complex Reasoning",
+    "dataset": "Proprietary mix (knowledge cutoff February 2025)",
+    "description": "## Anthropic Claude 3 Opus\n\nClaude 3 Opus represents Anthropic's most capable model, optimized for complex reasoning, in-depth analysis, and nuanced problem-solving across professional domains. This model implements advanced constitutional AI principles, enabling sophisticated reasoning while maintaining stringent ethical guidelines. Claude 3 Opus demonstrates exceptional performance on technical documentation analysis, legal document review, scientific paper comprehension, and strategic business analysis. The architecture incorporates novel training methodologies emphasizing interpretability and alignment with human values. With a knowledge cutoff in February 2025, the model represents the frontier of AI-assisted expert systems. Claude 3 Opus excels in tasks requiring deep domain expertise and nuanced judgment.\n\n**Key Characteristics:**\n- Constitutional AI alignment\n- Expert-level reasoning depth\n- Enhanced interpretability framework\n- Ethical reasoning emphasis",
+    "image": "https://i.ibb.co.com/ZzJ6C4q8/Claude-Opus.jpg",
+    "createdBy": "anthropic@example.com",
+    "createdAt": "2024-11-20T00:00:00.000Z",
+    "purchased": 81
+  },
+
+  {
+    "name": "Falcon 180B",
+    "framework": "PyTorch",
+    "useCase": "High-Performance Open-Source Language Model",
+    "dataset": "1.5 trillion tokens (knowledge cutoff April 2024)",
+    "description": "## Falcon 180B\n\nFalcon 180B represents the Technology Innovation Institute's ambitious attempt at creating a truly competitive open-source large language model at the 180-billion parameter scale. Trained on 1.5 trillion tokens of diverse textual data, Falcon 180B demonstrates performance rivaling proprietary models while maintaining complete transparency and openness. The architecture leverages PyTorch with specialized optimization techniques enabling efficient inference despite the model's scale. Falcon 180B incorporates novel attention mechanisms and improved positional encoding strategies. The model's availability under permissive licenses has fostered significant research contributions and enables organizations to fine-tune domain-specific variants. Falcon 180B exemplifies the growing trend toward competitive open-source AI systems.\n\n**Key Characteristics:**\n- 180B parameter architecture\n- Open-source transparency\n- Competitive performance metrics\n- Research-friendly licensing",
+    "image": "https://i.ibb.co.com/93qqNDXj/Falcon.jpg",
+    "createdBy": "tii@example.com",
+    "createdAt": "2024-04-01T00:00:00.000Z",
+    "purchased": 58
+  },
+  {
+    "name": "Yi-1.5 Large",
+    "framework": "PyTorch",
+    "useCase": "Bilingual Understanding & Knowledge Integration",
+    "dataset": "Balanced multilingual corpus (knowledge cutoff November 2024)",
+    "description": "## Yi-1.5 Large\n\nYi-1.5 Large represents 01.AI's advancement in bilingual language models, emphasizing superior performance across English and Chinese language understanding tasks. Trained on a carefully balanced multilingual corpus with knowledge extending through November 2024, this model addresses the significant gap in quality multilingual AI systems. Built on PyTorch, Yi-1.5 Large incorporates optimized tokenization strategies for logographic and alphabetic writing systems. The model demonstrates exceptional performance in cross-lingual reasoning, simultaneous multilingual processing, and cultural context preservation. Yi-1.5 Large exemplifies the emerging focus on non-English language capabilities, enabling organizations across Asia, Europe, and globally to leverage advanced AI with linguistic accessibility.\n\n**Key Characteristics:**\n- Bilingual optimization strategy\n- Advanced multilingual tokenization\n- Balanced language corpus\n- Cross-lingual reasoning capability",
+    "image": "https://i.ibb.co/placeholder/yi15.png",
+    "createdBy": "01ai@example.com",
+    "createdAt": "2024-11-10T00:00:00.000Z",
+    "purchased": 64
+  },
+  {
+    "name": "Stable Diffusion 3",
+    "framework": "PyTorch",
+    "useCase": "Advanced Image Generation & Synthesis",
+    "dataset": "Large-scale image-caption pairs (knowledge cutoff August 2024)",
+    "description": "## Stable Diffusion 3\n\nStable Diffusion 3 represents Stability AI's latest advancement in diffusion-based generative models for high-quality image synthesis from textual descriptions. Built on PyTorch, this model introduces improved text-to-image alignment mechanisms and enhanced semantic fidelity in generated outputs. The architecture incorporates flow-based generation methodologies combined with sophisticated attention mechanisms enabling nuanced prompt interpretation. Trained on extensive image-caption pair datasets, Stable Diffusion 3 demonstrates remarkable capabilities in photorealistic image generation, artistic style transfer, and complex scene composition. The model's accessibility through open-source distribution democratizes advanced generative AI capabilities, enabling researchers and practitioners to develop innovative applications.\n\n**Key Characteristics:**\n- Improved text-image alignment\n- Flow-based generation framework\n- Photorealistic output quality\n- Semantic prompt processing",
+    "image": "https://i.ibb.co/placeholder/stablediffusion3.png",
+    "createdBy": "stability@example.com",
+    "createdAt": "2024-08-20T00:00:00.000Z",
+    "purchased": 76
+  },
+  {
+    "name": "DALL-E 3",
+    "framework": "Unknown (OpenAI proprietary)",
+    "useCase": "Artistic Image Generation & Creative Visualization",
+    "dataset": "Proprietary curated image dataset (knowledge cutoff October 2024)",
+    "description": "## DALL-E 3\n\nDALL-E 3 represents OpenAI's third-generation vision-language model optimized for creative image generation from natural language descriptions. This advanced model integrates sophisticated text understanding with generative capabilities, enabling interpretations of complex, nuanced prompts. DALL-E 3 demonstrates improved artistic style adherence, better composition control, and enhanced semantic accuracy compared to predecessors. The architecture employs novel fusion mechanisms combining language understanding with visual generation pathways. Trained on carefully curated image-text pairs, DALL-E 3 prioritizes quality over quantity in training data. The model's capabilities in artistic visualization, conceptual design, and creative expression have established new benchmarks in generative visual AI.\n\n**Key Characteristics:**\n- Advanced prompt interpretation\n- Improved artistic style control\n- Semantic accuracy enhancement\n- Creative visualization focus",
+    "image": "https://i.ibb.co/placeholder/dalle3.png",
+    "createdBy": "openai@example.com",
+    "createdAt": "2024-10-01T00:00:00.000Z",
+    "purchased": 89
+  },
+  {
+    "name": "LLaMA 2 Chat",
+    "framework": "PyTorch",
+    "useCase": "Conversational AI & Dialogue Systems",
+    "dataset": "Open training dataset with human feedback (knowledge cutoff July 2023)",
+    "description": "## LLaMA 2 Chat\n\nMeta's LLaMA 2 Chat represents a specialized variant of the LLaMA 2 base model, specifically fine-tuned for conversational interactions and dialogue systems. Through reinforcement learning from human feedback (RLHF) techniques, this model demonstrates significantly improved instruction-following, safety awareness, and conversational coherence. Implemented in PyTorch, LLaMA 2 Chat maintains the efficiency characteristics of the base model while adding sophisticated conversational reasoning capabilities. The model's open-source availability and transparent training methodology have established it as a foundational resource for dialogue system research. LLaMA 2 Chat exemplifies responsible AI development through comprehensive safety evaluation and community engagement in model development.\n\n**Key Characteristics:**\n- RLHF-based fine-tuning\n- Conversational optimization\n- Safety training emphasis\n- Open-source deployment",
+    "image": "https://i.ibb.co.com/BKyxz7hn/Lamma.jpg",
+    "createdBy": "meta@example.com",
+    "createdAt": "2023-07-18T00:00:00.000Z",
+    "purchased": 82
+  },
+  {
+    "name": "InstructGPT-3.5",
+    "framework": "Unknown (OpenAI proprietary)",
+    "useCase": "Instruction-Following & Task Completion",
+    "dataset": "Proprietary mixture with human preferences (knowledge cutoff September 2022)",
+    "description": "## InstructGPT-3.5\n\nInstructGPT-3.5 represents OpenAI's effort in aligning language models with explicit user intentions through instruction-following optimization. This model employs sophisticated RLHF methodologies combined with supervised fine-tuning to achieve improved adherence to user directives and enhanced safety properties. Built on the GPT-3.5 architecture with refined training procedures, this model demonstrates superior performance on diverse task completion scenarios including content generation, analysis, and creative writing. The model prioritizes factuality, harmful content reduction, and appropriate uncertainty expression. InstructGPT-3.5 has served as a foundational basis for subsequent generations and exemplifies the importance of alignment techniques in modern language model development.\n\n**Key Characteristics:**\n- Instruction-following emphasis\n- RLHF-based alignment\n- Enhanced safety properties\n- Task-oriented optimization",
+    "image": "https://i.ibb.co.com/9Hm1nywr/instruct-GPT.jpg",
+    "createdBy": "openai@example.com",
+    "createdAt": "2022-09-01T00:00:00.000Z",
+    "purchased": 76
+  }
+]

@@ -76,7 +76,8 @@ router.get(MODEL_DETAILS, authMiddleware, async (req, res, next) => {
         const db = getDB();
         const { id } = req.params;
         if (!ObjectId.isValid(id)) return res.status(400).json({ success: false, message: 'Invalid model ID format' });
-        const model = await db.collection(MODELS).findOne({ _id: new ObjectId(id) });
+        console.info(ObjectId.isValid(id));
+        const model = await db.collection(MODELS).findOne({ _id: new ObjectId(id) }); console.log(model);
         if (!model) return res.status(404).json({ success: false, message: 'Model not found' });
         res.json({ success: true, data: model });
     } catch (error) {
